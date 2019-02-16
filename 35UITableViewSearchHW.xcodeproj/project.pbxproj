@@ -8,24 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		2CAF59272211F34700B1D036 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF59262211F34700B1D036 /* AppDelegate.m */; };
-		2CAF592A2211F34700B1D036 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF59292211F34700B1D036 /* ViewController.m */; };
 		2CAF592D2211F34700B1D036 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CAF592B2211F34700B1D036 /* Main.storyboard */; };
 		2CAF592F2211F34800B1D036 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CAF592E2211F34800B1D036 /* Assets.xcassets */; };
 		2CAF59322211F34800B1D036 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CAF59302211F34800B1D036 /* LaunchScreen.storyboard */; };
 		2CAF59352211F34800B1D036 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF59342211F34800B1D036 /* main.m */; };
+		2CAF593D2211F38500B1D036 /* EGBStudent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF593C2211F38500B1D036 /* EGBStudent.m */; };
+		2CAF59432212A96700B1D036 /* EGBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF59422212A96700B1D036 /* EGBViewController.m */; };
+		2CAF59452212ADFF00B1D036 /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = 2CAF59442212ADFF00B1D036 /* ReadMe */; };
+		2CAF594922131C8E00B1D036 /* EGBGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAF594822131C8E00B1D036 /* EGBGroup.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2CAF59222211F34700B1D036 /* 35UITableViewSearchHW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 35UITableViewSearchHW.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CAF59252211F34700B1D036 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2CAF59262211F34700B1D036 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2CAF59282211F34700B1D036 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2CAF59292211F34700B1D036 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2CAF592C2211F34700B1D036 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2CAF592E2211F34800B1D036 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CAF59312211F34800B1D036 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2CAF59332211F34800B1D036 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2CAF59342211F34800B1D036 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2CAF593B2211F38500B1D036 /* EGBStudent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EGBStudent.h; sourceTree = "<group>"; };
+		2CAF593C2211F38500B1D036 /* EGBStudent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EGBStudent.m; sourceTree = "<group>"; };
+		2CAF59412212A96700B1D036 /* EGBViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EGBViewController.h; sourceTree = "<group>"; };
+		2CAF59422212A96700B1D036 /* EGBViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EGBViewController.m; sourceTree = "<group>"; };
+		2CAF59442212ADFF00B1D036 /* ReadMe */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
+		2CAF594722131C8E00B1D036 /* EGBGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EGBGroup.h; sourceTree = "<group>"; };
+		2CAF594822131C8E00B1D036 /* EGBGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EGBGroup.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,17 +66,30 @@
 		2CAF59242211F34700B1D036 /* 35UITableViewSearchHW */ = {
 			isa = PBXGroup;
 			children = (
+				2CAF59462213160500B1D036 /* Students */,
+				2CAF59412212A96700B1D036 /* EGBViewController.h */,
+				2CAF59422212A96700B1D036 /* EGBViewController.m */,
 				2CAF59252211F34700B1D036 /* AppDelegate.h */,
 				2CAF59262211F34700B1D036 /* AppDelegate.m */,
-				2CAF59282211F34700B1D036 /* ViewController.h */,
-				2CAF59292211F34700B1D036 /* ViewController.m */,
 				2CAF592B2211F34700B1D036 /* Main.storyboard */,
 				2CAF592E2211F34800B1D036 /* Assets.xcassets */,
 				2CAF59302211F34800B1D036 /* LaunchScreen.storyboard */,
 				2CAF59332211F34800B1D036 /* Info.plist */,
 				2CAF59342211F34800B1D036 /* main.m */,
+				2CAF59442212ADFF00B1D036 /* ReadMe */,
 			);
 			path = 35UITableViewSearchHW;
+			sourceTree = "<group>";
+		};
+		2CAF59462213160500B1D036 /* Students */ = {
+			isa = PBXGroup;
+			children = (
+				2CAF593B2211F38500B1D036 /* EGBStudent.h */,
+				2CAF593C2211F38500B1D036 /* EGBStudent.m */,
+				2CAF594722131C8E00B1D036 /* EGBGroup.h */,
+				2CAF594822131C8E00B1D036 /* EGBGroup.m */,
+			);
+			path = Students;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,6 +149,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CAF59452212ADFF00B1D036 /* ReadMe in Resources */,
 				2CAF59322211F34800B1D036 /* LaunchScreen.storyboard in Resources */,
 				2CAF592F2211F34800B1D036 /* Assets.xcassets in Resources */,
 				2CAF592D2211F34700B1D036 /* Main.storyboard in Resources */,
@@ -141,9 +163,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CAF592A2211F34700B1D036 /* ViewController.m in Sources */,
+				2CAF594922131C8E00B1D036 /* EGBGroup.m in Sources */,
+				2CAF593D2211F38500B1D036 /* EGBStudent.m in Sources */,
 				2CAF59352211F34800B1D036 /* main.m in Sources */,
 				2CAF59272211F34700B1D036 /* AppDelegate.m in Sources */,
+				2CAF59432212A96700B1D036 /* EGBViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
