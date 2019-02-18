@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EGBViewController : UITableViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sortedTypeControl;
+
+- (IBAction)actionControl:(UISegmentedControl *)sender;
+
 
 @end
 

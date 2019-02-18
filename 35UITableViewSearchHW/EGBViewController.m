@@ -10,6 +10,14 @@
 #import "EGBStudent.h"
 #import "EGBGroup.h"
 
+typedef enum {
+    
+    EGBDateSortedType,
+    EGBNameSortedType,
+    EGBSurnameSortedType
+    
+} EGBStudentsSortedType;
+
 @interface EGBViewController ()
 
 @property (strong, nonatomic) NSMutableArray *studentsArray;
@@ -34,17 +42,53 @@
         
         [self.studentsArray addObject:[EGBStudent randomStudent]];
     }
-    
-    NSArray *sortedByDate = [[NSArray alloc] init];
-    sortedByDate = self.studentsArray;
-    
-    self.superDateSorted = [self sortStudentsByDate:sortedByDate];
-    
-    self.groupArray = [self generateSectionsFromArray:self.superDateSorted withFilter:self.searchBar.text];
+  
+   
+    NSArray *sortedArray = [[NSArray alloc] init];
+    sortedArray = self.studentsArray;
+
+    self.superDateSorted = [self sortStudentsByDate:sortedArray];
+
+    self.groupArray = [self generateSectionsFromArrayByNamesAndSurnames:self.superDateSorted withFilter:self.searchBar.text];
     [self.tableView reloadData];
+    
+    
+    self.sortedTypeControl.selectedSegmentIndex = EGBDateSortedType;
 }
 
 #pragma mark - Private Methods
+
+- (IBAction)actionControl:(UISegmentedControl *)sender {
+ 
+    NSArray *sortedByDate = [[NSArray alloc] init];
+    sortedByDate = self.studentsArray;
+    
+    switch (sender.selectedSegmentIndex) {
+            
+        case EGBDateSortedType:
+            self.superDateSorted = [self sortStudentsByDate:sortedByDate];
+            self.groupArray = [self generateSectionsFromArrayByNamesAndSurnames:self.superDateSorted withFilter:self.searchBar.text];
+            break;
+            
+        case EGBNameSortedType:
+            self.superDateSorted = [self sortStudentsByName:sortedByDate];
+            self.groupArray = [self generateSectionsFromArrayByNamesAndSurnames:self.superDateSorted withFilter:self.searchBar.text];
+            break;
+            
+        case EGBSurnameSortedType:
+            self.superDateSorted = [self sortStudentsByLastName:sortedByDate];
+            self.groupArray = [self generateSectionsFromArrayByNamesAndSurnames:self.superDateSorted withFilter:self.searchBar.text];
+            break;
+            
+        default:
+            self.sortedTypeControl.selectedSegmentIndex = EGBDateSortedType;
+            break;
+    }
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark - Sorting Methods
 
 - (NSArray*) sortStudentsByDate:(NSArray*) array {
     
@@ -72,11 +116,65 @@
     return sorted;
 }
 
-- (NSArray*) generateSectionsFromArray:(NSArray*) array withFilter:(NSString*) filterString {
+- (NSArray*) sortStudentsByName:(NSArray*) array {
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM"];
+    
+    NSArray *sorted = [array sortedArrayUsingComparator:^NSComparisonResult(EGBStudent *stud1, EGBStudent *stud2) {
+        
+        NSString *month1 = [dateFormatter stringFromDate:stud1.dateOfBirth];
+        NSString *month2 = [dateFormatter stringFromDate:stud2.dateOfBirth];
+        
+        if ([stud1.firstName isEqualToString:stud2.firstName]) {
+            
+            if ([stud1.lastName isEqualToString:stud2.lastName]) {
+                
+                [month1 compare:month2];
+            }
+            
+            return [stud1.lastName compare:stud2.lastName];
+        }
+        
+        return [stud1.firstName compare:stud2.firstName];
+    }];
+    
+    return sorted;
+}
+
+- (NSArray*) sortStudentsByLastName:(NSArray*) array {
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM"];
+    
+    NSArray *sorted = [array sortedArrayUsingComparator:^NSComparisonResult(EGBStudent *stud1, EGBStudent *stud2) {
+        
+        NSString *month1 = [dateFormatter stringFromDate:stud1.dateOfBirth];
+        NSString *month2 = [dateFormatter stringFromDate:stud2.dateOfBirth];
+        
+        if ([stud1.lastName isEqualToString:stud2.lastName]) {
+            
+            if ([month1 isEqualToString:month2]) {
+                
+                [stud1.firstName compare:stud2.firstName];
+            }
+            
+            return [month1 compare:month2];
+        }
+        
+        return [stud1.lastName compare:stud2.lastName];
+    }];
+    
+    return sorted;
+}
+
+#pragma mark - Generating Section Method
+
+- (NSArray*) generateSectionsFromArrayByNamesAndSurnames:(NSArray*) array withFilter:(NSString*) filterString {
     
     NSMutableArray *groupsArray = [NSMutableArray array];
     
-    NSString *currentNameMonth = nil;
+    NSString *currentLetter = nil;
     
     for (EGBStudent *student in self.superDateSorted) {
         
@@ -90,14 +188,29 @@
         
         EGBGroup *group = nil;
         
-        NSString *firstMonth = self.monthNames[month-1];
+        NSString *studentData = nil;
         
-        if (![currentNameMonth isEqualToString:firstMonth]) {
+        if (self.sortedTypeControl.selectedSegmentIndex == EGBNameSortedType) {
+            
+            studentData = student.firstName;
+            
+        } else if (self.sortedTypeControl.selectedSegmentIndex == EGBSurnameSortedType) {
+            
+            studentData = student.lastName;
+            
+        } else if (self.sortedTypeControl.selectedSegmentIndex == EGBDateSortedType) {
+            
+            studentData = self.monthNames[month-1];
+        }
+        
+        NSString *firstLetter = [studentData substringToIndex:1];
+        
+        if (![currentLetter isEqualToString:firstLetter]) {
             
             group = [[EGBGroup alloc] init];
-            group.groupName = firstMonth;
+            group.groupName = firstLetter;
             group.students = [NSMutableArray array];
-            currentNameMonth = firstMonth;
+            currentLetter = firstLetter;
             [groupsArray addObject:group];
             
         } else {
@@ -108,14 +221,9 @@
         [group.students addObject:student];
     }
     
-    NSLog(@"groupArray count: %ld", [self.groupArray count]);
-    for (int i = 0; i < [self.groupArray count]; i++) {
-        
-        NSLog(@"%@", [self.groupArray[i] groupName]);
-    }
-    
     return groupsArray;
 }
+
 
 #pragma mark - UITableViewDataSourse
 
@@ -125,22 +233,20 @@
     
     for (EGBGroup *group in self.groupArray) {
         
-        [array addObject:[group.groupName substringToIndex:3]];
+        [array addObject:[group.groupName substringToIndex:1]];
     }
     
     return array;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
+    
     return [self.groupArray count];
 }
 
 - (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 
-    NSString *month = [self.monthNames objectAtIndex:section];
-
-    return month;
+    return [[self.groupArray objectAtIndex:section] groupName];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -158,7 +264,7 @@
     
     if (!cell) {
         
-         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
     
     EGBGroup *group = [self.groupArray objectAtIndex:indexPath.section];
@@ -188,54 +294,11 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     
-    self.groupArray = [self generateSectionsFromArray:self.superDateSorted withFilter:self.searchBar.text];
+    self.groupArray = [self generateSectionsFromArrayByNamesAndSurnames:self.superDateSorted withFilter:self.searchBar.text];
+    
     [self.tableView reloadData];
  
     NSLog(@"textDidChange: %@", searchText);
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
